@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/certyfikaty.iml" filepath="$PROJECT_DIR$/.idea/certyfikaty.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/laravel-sakai.iml" filepath="$PROJECT_DIR$/.idea/laravel-sakai.iml" />
     </modules>
   </component>
 </project>
