@@ -4,18 +4,17 @@ namespace App\Domains\Quizzes\Html;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class UpdateQuizRequest extends FormRequest
+class UpdateQuestionRequest extends FormRequest
 {
     public function authorize(): true
     {
-        return Gate::check('update', $this->route('quiz'));
+        return Gate::check('update', $this->route('question'));
     }
 
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255',
+            'question' => 'required|string',
         ];
     }
 }

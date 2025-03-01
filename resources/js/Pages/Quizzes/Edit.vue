@@ -4,6 +4,8 @@ import InputText from "primevue/inputtext";
 import { reactive, ref } from "vue";
 import axios from "axios";
 import pkg from "lodash";
+import Question from "@/Components/Quizzes/Question.vue";
+
 const { _, debounce, pickBy } = pkg;
 
 const props = defineProps({
@@ -22,12 +24,14 @@ const data = reactive({
 
 const update = () => {
     debounce(() => {
-        axios.post(route('admin.quizzes.update', props.quiz.id), {
-            name: data.name.value,
-            slug: data.slug.value,
-        }).then((response) => {
-            console.log(response);
-        });
+        axios
+            .post(route("admin.quizzes.update", props.quiz.id), {
+                name: data.name.value,
+                slug: data.slug.value,
+            })
+            .then((response) => {
+                console.log(response);
+            });
     }, 150);
 };
 </script>
@@ -85,6 +89,23 @@ const update = () => {
                         :value="route('quiz.show', data.slug.value)"
                     />
                 </div>
+            </div>
+        </div>
+
+        <Question
+            v-for="question in props.quiz.questions"
+            :question="question"
+        />
+
+        <div class="card">
+            <div class="col-span-12">
+                <a :href="route('admin.quizzes.add_question', props.quiz.id)">
+                    <Button
+                        label="Dodaj pytanie"
+                        icon="pi pi-plus"
+                        class="mr-2"
+                    />
+                </a>
             </div>
         </div>
     </app-layout>

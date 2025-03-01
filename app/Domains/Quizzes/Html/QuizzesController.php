@@ -1,6 +1,8 @@
 <?php
 namespace App\Domains\Quizzes\Html;
 
+use App\Domains\Quizzes\Models\Question;
+use App\Domains\Quizzes\Models\QuestionOption;
 use App\Domains\Quizzes\Models\Quiz;
 use App\Domains\Quizzes\QuizRepository;
 use App\Http\Controllers\Controller;
@@ -26,6 +28,8 @@ class QuizzesController extends Controller
 
     public function edit(Quiz $quiz)
     {
+        $quiz->load('questions.options');
+
         return Inertia::render('Quizzes/Edit', [
             'quiz' => $quiz,
         ]);
@@ -36,5 +40,19 @@ class QuizzesController extends Controller
         $quiz->update($request->validated());
 
         return ['OK'];
+    }
+
+    public function addQuestion(Quiz $quiz)
+    {
+        Question::factory()
+            ->has(QuestionOption::factory()->count(4), 'options')
+            ->create([
+                'quiz_id' => $quiz->id,
+                'order'   => $quiz->getMaxOrder() + 1,
+            ]);
+
+        $quiz->load('questions.options');
+
+        return back();
     }
 }

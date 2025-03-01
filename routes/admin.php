@@ -1,10 +1,9 @@
 <?php
 
+use App\Domains\Quizzes\Html\QuestionsController;
 use App\Domains\Quizzes\Html\QuizzesController;
 use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -21,16 +20,14 @@ Route::prefix('/quizzes')
         Route::get('/create', QuizzesController::class . '@create')->name('create');
         Route::get('/{quiz}', QuizzesController::class . '@edit')->name('edit');
         Route::post('/{quiz}', QuizzesController::class . '@update')->name('update');
+        Route::get('/{quiz}/add_question', QuizzesController::class . '@addQuestion')->name('add_question');
     });
 
-//
-//Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-//
-//Route::resource('/user', UserController::class)->except('create', 'show', 'edit');
-//Route::post('/user/destroy-bulk', [UserController::class, 'destroyBulk'])->name('user.destroy-bulk');
-//
-//Route::resource('/role', RoleController::class)->except('create', 'show', 'edit');
-//
-//Route::resource('/permission', PermissionController::class)->except('create', 'show', 'edit');
+Route::prefix('/questions')
+    ->name('questions.')
+    ->group(function () {
+        Route::post('/{question}', QuestionsController::class . '@update')->name('update');
+        Route::get('/{question}/destroy', QuestionsController::class . '@destroy')->name('destroy');
+        Route::get('/{question}/up', QuestionsController::class . '@up')->name('up');
+        Route::get('/{question}/down', QuestionsController::class . '@down')->name('down');
+    });
