@@ -1,7 +1,7 @@
 <script>
 import TextInput from "@/Components/TextInput.vue";
 import InputText from "primevue/inputtext";
-import {debounce} from "lodash";
+import { debounce } from "lodash";
 
 export default {
     name: "Question",
@@ -18,25 +18,26 @@ export default {
             },
         };
     },
+    created() {
+        this.update = debounce(this._update, 500);
+    },
     mounted() {
         this.data.question = this.question.question;
     },
     methods: {
-        update() {
+        _update() {
             this.data.is_saved = false;
             this.data.has_error = false;
-            debounce(() => {
-                axios
-                    .post(route("admin.questions.update", this.question.id), {
-                        question: this.data.question,
-                    })
-                    .then((response) => {
-                        this.data.is_saved = true;
-                    })
-                    .catch((error) => {
-                        this.data.has_error = true;
-                    });
-            }, 150);
+            axios
+                .post(route("admin.questions.update", this.question.id), {
+                    question: this.data.question,
+                })
+                .then((response) => {
+                    this.data.is_saved = true;
+                })
+                .catch((error) => {
+                    this.data.has_error = true;
+                });
         },
     },
 };
@@ -67,7 +68,7 @@ export default {
                 </a>
                 <a :href="route('admin.questions.up', question.id)">
                     <Button
-                        :disabled="question.order <= 1"
+                        :disabled="question.order < 1"
                         icon="pi pi-chevron-up"
                         class="p-button"
                     />

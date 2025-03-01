@@ -22,7 +22,7 @@ const data = reactive({
     },
 });
 
-const update = () => {
+const update =
     debounce(() => {
         axios
             .post(route("admin.quizzes.update", props.quiz.id), {
@@ -32,8 +32,8 @@ const update = () => {
             .then((response) => {
                 console.log(response);
             });
-    }, 150);
-};
+    }, 500);
+
 </script>
 
 <template>

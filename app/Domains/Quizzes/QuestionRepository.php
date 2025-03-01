@@ -18,15 +18,18 @@ class QuestionRepository
             ->orderBy('order', 'desc')
             ->first();
 
-        $previousQuestion->update([
-            'order' => $question->order,
-        ]);
+        if ($previousQuestion !== null) {
+            $previousQuestion->update([
+                'order' => $question->order,
+            ]);
+        }
+
         $question->update([
             'order' => $question->order - 1,
         ]);
     }
 
-    public function moveDown(Question $question)
+    public function moveDown(Question $question): void
     {
         if ($question->order >= $question->quiz->getMaxOrder()) {
             $question->update(['order' => $question->quiz->getMaxOrder()]);
@@ -39,9 +42,12 @@ class QuestionRepository
             ->orderBy('order')
             ->first();
 
-        $nextQuestion->update([
-            'order' => $question->order,
-        ]);
+        if ($nextQuestion !== null) {
+            $nextQuestion->update([
+                'order' => $question->order,
+            ]);
+        }
+
         $question->update([
             'order' => $question->order + 1,
         ]);
