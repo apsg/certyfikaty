@@ -2,10 +2,11 @@
 import TextInput from "@/Components/TextInput.vue";
 import InputText from "primevue/inputtext";
 import { debounce } from "lodash";
+import Option from "@/Components/Quizzes/Option.vue";
 
 export default {
     name: "Question",
-    components: { InputText, TextInput },
+    components: { Option, InputText, TextInput },
     props: {
         question: Object,
     },
@@ -44,9 +45,10 @@ export default {
 </script>
 <template>
     <div class="card">
-        <div class="grid grid-cols-12">
+        <div class="grid grid-cols-12 pb-3">
+            <h3 class="col-span-12 text-lg pb-2 font-bold">Pytanie:</h3>
             <TextInput
-                class="col-span-11 md:col-span-11 border"
+                class="col-span-11 border"
                 :class="
                     data.is_saved
                         ? 'border-green-500'
@@ -77,6 +79,13 @@ export default {
                     <Button icon="pi pi-chevron-down" class="p-button" />
                 </a>
             </div>
+        </div>
+        <div class="">
+            <Option
+                v-for="option in question.options"
+                :key="option.id"
+                :option="option"
+            />
         </div>
     </div>
 </template>

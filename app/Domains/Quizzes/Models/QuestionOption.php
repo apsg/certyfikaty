@@ -21,6 +21,9 @@ class QuestionOption extends Model
     use HasFactory;
 
     protected $fillable = ['option', 'question_id', 'is_correct'];
+    protected $casts = [
+        'is_correct' => 'boolean',
+    ];
 
     public function question(): BelongsTo
     {

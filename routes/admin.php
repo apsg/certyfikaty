@@ -1,5 +1,6 @@
 <?php
 
+use App\Domains\Quizzes\Html\OptionsController;
 use App\Domains\Quizzes\Html\QuestionsController;
 use App\Domains\Quizzes\Html\QuizzesController;
 use App\Http\Controllers\PermissionController;
@@ -30,4 +31,11 @@ Route::prefix('/questions')
         Route::get('/{question}/destroy', QuestionsController::class . '@destroy')->name('destroy');
         Route::get('/{question}/up', QuestionsController::class . '@up')->name('up');
         Route::get('/{question}/down', QuestionsController::class . '@down')->name('down');
+    });
+
+Route::prefix('/options')
+    ->name('options.')
+    ->group(function () {
+        Route::post('/{option}', OptionsController::class . '@update')->name('update');
+        Route::get('/{option}/destroy', OptionsController::class . '@destroy')->name('destroy');
     });
