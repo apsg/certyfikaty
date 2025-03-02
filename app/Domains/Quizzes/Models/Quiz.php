@@ -2,6 +2,7 @@
 namespace App\Domains\Quizzes\Models;
 
 use App\Models\User;
+use App\HasUserTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,14 +21,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Quiz extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUserTrait;
 
     protected $fillable = ['name', 'slug', 'user_id'];
-
-    public function scopeForUser(Builder $builder, User $user): Builder
-    {
-        return $builder->where('user_id', $user->id);
-    }
 
     protected static function newFactory(): QuizFactory
     {

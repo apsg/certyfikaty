@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Domains\Cerificates\Models\Layout;
+use App\Domains\Cerificates\Models\Policies\LayoutPolicy;
 use App\Domains\Quizzes\Models\Policies\QuestionPolicy;
 use App\Domains\Quizzes\Models\Policies\QuizPolicy;
 use App\Domains\Quizzes\Models\Question;
@@ -20,5 +22,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::policy(Question::class, QuestionPolicy::class);
         Gate::policy(Quiz::class, QuizPolicy::class);
+        Gate::policy(Layout::class, LayoutPolicy::class);
     }
 }

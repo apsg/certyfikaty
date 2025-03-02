@@ -1,10 +1,9 @@
 <?php
 
+use App\Domains\Cerificates\Html\LayoutsController;
 use App\Domains\Quizzes\Html\OptionsController;
 use App\Domains\Quizzes\Html\QuestionsController;
 use App\Domains\Quizzes\Html\QuizzesController;
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -40,4 +39,15 @@ Route::prefix('/options')
         Route::post('/{option}', OptionsController::class . '@update')->name('update');
         Route::get('/{option}/destroy', OptionsController::class . '@destroy')->name('destroy');
         Route::get('/{question}/create', OptionsController::class . '@create')->name('create');
+    });
+
+Route::prefix('/layouts')
+    ->name('layouts.')
+    ->group(function () {
+        Route::get('/', LayoutsController::class . '@index')->name('index');
+        Route::post('/', LayoutsController::class . '@store')->name('store');
+        Route::get('/{layout}', LayoutsController::class . '@edit')->name('edit');
+        Route::get('/{layout}/destroy', LayoutsController::class . '@destroy')->name('destroy');
+        Route::post('/{layout}', LayoutsController::class . '@update')->name('update');
+        Route::get('/{layout}/test', LayoutsController::class . '@test')->name('test');
     });

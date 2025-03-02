@@ -8,18 +8,11 @@ const model = ref([
         items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/admin/dashboard' }]
     },
     {
-        items: [{ label: 'Testy', icon: 'pi pi-fw pi-book', to: '/admin/quizzes' }]
+        items: [{ label: 'Testy', icon: 'pi pi-fw pi-list-check', to: '/admin/quizzes' }]
     },
     {
-        items: [
-            {
-                label: 'Template Source',
-                icon: 'pi pi-fw pi-github',
-                url: 'https://sakai.primevue.org/',
-                target: '_blank'
-            }
-        ]
-    }
+        items: [{ label: 'Szablony certyfikatów', icon: 'pi pi-fw pi-book', to: '/admin/layouts' }]
+    },
 ]);
 </script>
 
