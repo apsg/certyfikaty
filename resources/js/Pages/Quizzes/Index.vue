@@ -6,8 +6,6 @@ import { reactive, ref } from "vue";
 import pkg from "lodash";
 import { loadToast } from "@/composables/loadToast";
 import NavLink from "@/Components/NavLink.vue";
-import {IconField, InputIcon} from "primevue";
-const { _, debounce, pickBy } = pkg;
 
 const props = defineProps({
     title: String,
@@ -30,6 +28,12 @@ const data = reactive({
 loadToast();
 
 const form = useForm({});
+
+const destroy = (id) => {
+    if (confirm("Are you sure?")) {
+        form.delete(route("admin.quizzes.destroy", id));
+    }
+};
 </script>
 
 <template>
@@ -39,14 +43,10 @@ const form = useForm({});
                 :href="route('admin.quizzes.create')"
                 class="btn btn-primary"
             >
-                <Button
-                    label="Dodaj"
-                    icon="pi pi-plus"
-                />
+                <Button label="Dodaj" icon="pi pi-plus" />
             </NavLink>
             <DataTable lazy :value="quizzes" tableStyle="min-width: 50rem">
-                <template #header>
-                </template>
+                <template #header> </template>
                 <template #empty> No data found.</template>
                 <template #loading> Loading data. Please wait.</template>
 
@@ -59,12 +59,26 @@ const form = useForm({});
                 <Column field="name" header="Name"></Column>
                 <Column :exportable="false" style="min-width: 12rem">
                     <template #body="slotProps">
-                        <a :href="route('admin.quizzes.edit', slotProps.data.id)">
-                            <Button icon="pi pi-pencil" outlined rounded
-                                    class="mr-2"
-                                    @click=""
+                        <a
+                            :href="
+                                route('admin.quizzes.edit', slotProps.data.id)
+                            "
+                        >
+                            <Button
+                                icon="pi pi-pencil"
+                                outlined
+                                rounded
+                                class="mr-2"
+                                @click=""
                             />
                         </a>
+                        <Button
+                            icon="pi pi-trash"
+                            outlined
+                            rounded
+                            class="p-button-danger"
+                            @click="destroy(slotProps.data.id)"
+                        />
                     </template>
                 </Column>
             </DataTable>

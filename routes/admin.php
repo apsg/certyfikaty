@@ -21,6 +21,7 @@ Route::prefix('/quizzes')
         Route::get('/create', QuizzesController::class . '@create')->name('create');
         Route::get('/{quiz}', QuizzesController::class . '@edit')->name('edit');
         Route::post('/{quiz}', QuizzesController::class . '@update')->name('update');
+        Route::delete('/{quiz}', QuizzesController::class . '@destroy')->name('destroy');
         Route::get('/{quiz}/add_question', QuizzesController::class . '@addQuestion')->name('add_question');
     });
 
@@ -38,4 +39,5 @@ Route::prefix('/options')
     ->group(function () {
         Route::post('/{option}', OptionsController::class . '@update')->name('update');
         Route::get('/{option}/destroy', OptionsController::class . '@destroy')->name('destroy');
+        Route::get('/{question}/create', OptionsController::class . '@create')->name('create');
     });

@@ -42,6 +42,15 @@ class QuizzesController extends Controller
         return ['OK'];
     }
 
+    public function destroy(Quiz $quiz)
+    {
+        $this->authorize('delete', $quiz);
+
+        $quiz->delete();
+
+        return redirect(route('admin.quizzes.index'));
+    }
+
     public function addQuestion(Quiz $quiz)
     {
         Question::factory()

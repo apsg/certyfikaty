@@ -65,27 +65,36 @@ export default {
             <div
                 class="col-span-1 md:col-span-1 flex justify-between items-center"
             >
-                <a :href="route('admin.questions.destroy', question.id)">
+                <a :href="route('admin.questions.destroy', question.id)" title="Usuń pytanie">
                     <Button icon="pi pi-trash" class="p-button-danger" />
                 </a>
-                <a :href="route('admin.questions.up', question.id)">
+                <a :href="route('admin.questions.up', question.id)" title="Przesuń w górę">
                     <Button
                         :disabled="question.order < 1"
                         icon="pi pi-chevron-up"
                         class="p-button"
                     />
                 </a>
-                <a :href="route('admin.questions.down', question.id)">
+                <a :href="route('admin.questions.down', question.id)" title="Przesuń w dół">
                     <Button icon="pi pi-chevron-down" class="p-button" />
                 </a>
             </div>
         </div>
-        <div class="">
+        <div class="flex flex-wrap">
             <Option
                 v-for="option in question.options"
                 :key="option.id"
                 :option="option"
             />
+            <div>
+                <a :href="route('admin.options.create', question.id)">
+                    <Button
+                        label="Dodaj odpowiedź"
+                        icon="pi pi-plus"
+                        class="p-button-rounded p-button"
+                    />
+                </a>
+            </div>
         </div>
     </div>
 </template>
