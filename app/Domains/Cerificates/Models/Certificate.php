@@ -1,0 +1,46 @@
+<?php
+namespace App\Domains\Cerificates\Models;
+
+use App\Domains\Quizzes\Models\Quiz;
+use App\HasUserTrait;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+/**
+ * @property int         id
+ * @property string      $slug
+ * @property string      $title
+ * @property string      $date
+ * @property int         $user_id
+ * @property int         $layout_id
+ * @property int|null    $quiz_id
+ * @property Carbon      $created_at
+ * @property Carbon      $updated_at
+ *
+ * @property-read Layout $layout
+ * @property-read Quiz   $quiz
+ */
+class Certificate extends Model
+{
+    use HasUserTrait;
+
+    protected $fillable = [
+        'slug',
+        'title',
+        'date',
+        'user_id',
+        'layout_id',
+        'quiz_id',
+    ];
+
+    public function layout(): BelongsTo
+    {
+        return $this->belongsTo(Layout::class);
+    }
+
+    public function quiz(): BelongsTo
+    {
+        return $this->belongsTo(Quiz::class);
+    }
+}

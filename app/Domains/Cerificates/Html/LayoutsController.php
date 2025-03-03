@@ -1,7 +1,7 @@
 <?php
 namespace App\Domains\Cerificates\Html;
 
-use App\Domains\Cerificates\Certificate;
+use App\Domains\Cerificates\CertificateGenerator;
 use App\Domains\Cerificates\Models\Layout;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -70,7 +70,7 @@ class LayoutsController extends Controller
 
     public function test(Layout $layout)
     {
-        $certificate = new Certificate($layout);
+        $certificate = new CertificateGenerator($layout);
         $certificate->setDate(Carbon::now()->format('Y-m-d'))
             ->setName('Antoni Brzęczyszczykiewicz')
             ->setTitle('Kurs Excel w godzinę')

@@ -5,8 +5,7 @@ use App\Domains\Cerificates\Models\Layout;
 use Illuminate\Support\Facades\Storage;
 use setasign\Fpdi\Fpdi;
 
-
-class Certificate
+class CertificateGenerator
 {
     protected Layout $layout;
     protected string $date;
@@ -16,7 +15,6 @@ class Certificate
 
     public function __construct(Layout $layout)
     {
-        //
         $this->layout = $layout;
     }
 

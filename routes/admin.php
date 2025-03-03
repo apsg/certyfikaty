@@ -1,5 +1,6 @@
 <?php
 
+use App\Domains\Cerificates\Html\CertificatesController;
 use App\Domains\Cerificates\Html\LayoutsController;
 use App\Domains\Quizzes\Html\OptionsController;
 use App\Domains\Quizzes\Html\QuestionsController;
@@ -50,4 +51,15 @@ Route::prefix('/layouts')
         Route::get('/{layout}/destroy', LayoutsController::class . '@destroy')->name('destroy');
         Route::post('/{layout}', LayoutsController::class . '@update')->name('update');
         Route::get('/{layout}/test', LayoutsController::class . '@test')->name('test');
+    });
+
+Route::prefix('/certificates')
+    ->name('certificates.')
+    ->group(function () {
+        Route::get('/', CertificatesController::class . '@index')->name('index');
+        Route::get('/create', CertificatesController::class . '@create')->name('create');
+        Route::post('/', CertificatesController::class . '@store')->name('store');
+        Route::get('/{certificate}', CertificatesController::class . '@edit')->name('edit');
+        Route::post('/{certificate}', CertificatesController::class . '@update')->name('update');
+        Route::get('/{certificate}/destroy', CertificatesController::class . '@destroy')->name('destroy');
     });

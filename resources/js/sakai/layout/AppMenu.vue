@@ -8,10 +8,13 @@ const model = ref([
         items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/admin/dashboard' }]
     },
     {
-        items: [{ label: 'Testy', icon: 'pi pi-fw pi-list-check', to: '/admin/quizzes' }]
+        items: [{ label: 'Testy', icon: 'pi pi-fw pi-list', to: '/admin/quizzes' }]
     },
     {
         items: [{ label: 'Szablony certyfikatów', icon: 'pi pi-fw pi-book', to: '/admin/layouts' }]
+    },
+    {
+        items: [{ label: 'Certyfikaty', icon: 'pi pi-fw pi-link', to: '/admin/certificates' }]
     },
 ]);
 </script>
