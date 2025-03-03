@@ -111,47 +111,49 @@ const update = debounce(() => {
                     @change="update"
                 />
 
+                <p class="col-span-12 mt-5">Podaj wartości w mm określające pozycję elementu od lewego górnego rogu strony:</p>
+
                 <label>Data:</label>
                 <InputGroup class="col-span-12">
                     <InputGroupAddon>Góra:</InputGroupAddon>
-                    <InputNumber @input="update" v-model="data.date_position_top.value" placeholder="góra" show-buttons :min="0" :max="1000" />
+                    <InputNumber @update:model-value="update" v-model="data.date_position_top.value" placeholder="góra" show-buttons :min="0" :max="1000" />
                     <InputGroupAddon>Lewo:</InputGroupAddon>
-                    <InputNumber allow-empty @input="update" v-model="data.date_position_left.value" placeholder="(zostaw puste żeby wyśrodkować)"  show-buttons :min="0" :max="1000"/>
+                    <InputNumber allow-empty @update:model-value="update" v-model="data.date_position_left.value" placeholder="(zostaw puste żeby wyśrodkować)"  show-buttons :min="0" :max="1000"/>
                     <InputGroupAddon>Font:</InputGroupAddon>
-                    <InputNumber @input="update" v-model="data.date_font_size.value" placeholder="font"  show-buttons :min="0" :max="1000" />
+                    <InputNumber @update:model-value="update" v-model="data.date_font_size.value" placeholder="font"  show-buttons :min="0" :max="1000" />
                     <InputGroupAddon>px</InputGroupAddon>
                 </InputGroup>
 
                 <label>Tytuł:</label>
                 <InputGroup class="col-span-12">
                     <InputGroupAddon>Góra:</InputGroupAddon>
-                    <InputNumber @input="update" v-model="data.title_position_top.value" placeholder="góra" show-buttons :min="0" :max="1000" />
+                    <InputNumber @update:model-value="update" v-model="data.title_position_top.value" placeholder="góra" show-buttons :min="0" :max="1000" />
                     <InputGroupAddon>Lewo:</InputGroupAddon>
-                    <InputNumber allow-empty @input="update" v-model="data.title_position_left.value" placeholder="(zostaw puste żeby wyśrodkować)"  show-buttons :min="0" :max="1000"/>
+                    <InputNumber allow-empty @update:model-value="update" v-model="data.title_position_left.value" placeholder="(zostaw puste żeby wyśrodkować)"  show-buttons :min="0" :max="1000"/>
                     <InputGroupAddon>Font:</InputGroupAddon>
-                    <InputNumber @input="update" v-model="data.title_font_size.value" placeholder="font"  show-buttons :min="0" :max="1000" />
+                    <InputNumber @update:model-value="update" v-model="data.title_font_size.value" placeholder="font"  show-buttons :min="0" :max="1000" />
                     <InputGroupAddon>px</InputGroupAddon>
                 </InputGroup>
 
                 <label class="col-span-12">Imię i nazwisko:</label>
                 <InputGroup class="col-span-12">
                     <InputGroupAddon>Góra:</InputGroupAddon>
-                    <InputNumber @input="update" v-model="data.name_position_top.value" placeholder="góra" show-buttons :min="0" :max="1000" />
+                    <InputNumber @update:model-value="update" v-model="data.name_position_top.value" placeholder="góra" show-buttons :min="0" :max="1000" />
                     <InputGroupAddon>Lewo:</InputGroupAddon>
-                    <InputNumber allow-empty @input="update" v-model="data.name_position_left.value" placeholder="(zostaw puste żeby wyśrodkować)"  show-buttons :min="0" :max="1000"/>
+                    <InputNumber allow-empty @update:model-value="update" v-model="data.name_position_left.value" placeholder="(zostaw puste żeby wyśrodkować)"  show-buttons :min="0" :max="1000"/>
                     <InputGroupAddon>Font:</InputGroupAddon>
-                    <InputNumber @input="update" v-model="data.name_font_size.value" placeholder="font"  show-buttons :min="0" :max="1000" />
+                    <InputNumber @update:model-value="update" v-model="data.name_font_size.value" placeholder="font"  show-buttons :min="0" :max="1000" />
                     <InputGroupAddon>px</InputGroupAddon>
                 </InputGroup>
 
                 <label>Numer:</label>
                 <InputGroup class="col-span-12">
                     <InputGroupAddon>Góra:</InputGroupAddon>
-                    <InputNumber @input="update" v-model="data.number_position_top.value" placeholder="góra" show-buttons :min="0" :max="1000" />
+                    <InputNumber @update:model-value="update" v-model="data.number_position_top.value" placeholder="góra" show-buttons :min="0" :max="1000" />
                     <InputGroupAddon>Lewo:</InputGroupAddon>
-                    <InputNumber allow-empty @input="update" v-model="data.number_position_left.value" placeholder="(zostaw puste żeby wyśrodkować)"  show-buttons :min="0" :max="1000"/>
+                    <InputNumber allow-empty @update:model-value="update" v-model="data.number_position_left.value" placeholder="(zostaw puste żeby wyśrodkować)"  show-buttons :min="0" :max="1000"/>
                     <InputGroupAddon>Font:</InputGroupAddon>
-                    <InputNumber @input="update" v-model="data.number_font_size.value" placeholder="font"  show-buttons :min="0" :max="1000" />
+                    <InputNumber @update:model-value="update" v-model="data.number_font_size.value" placeholder="font"  show-buttons :min="0" :max="1000" />
                     <InputGroupAddon>px</InputGroupAddon>
                 </InputGroup>
             </div>
