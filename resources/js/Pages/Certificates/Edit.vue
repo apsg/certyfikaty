@@ -72,7 +72,7 @@ const update = debounce(() => {
                         class="mr-2"
                     />
                 </a>
-                Edycja testu
+                Edycja certyfikatu (linku)
             </div>
 
             <div class="grid grid-cols-12 gap-2">
