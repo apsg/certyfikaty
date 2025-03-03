@@ -1,0 +1,50 @@
+name: Test and deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install NPM Dependencies
+      - run: npm ci
+      - name: Build frontend
+      - run: npm run build
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@v2.1.6
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.KEY }}
+          ARGS: "-rltgoDzvO"
+          SOURCE: "/"
+          REMOTE_HOST: ${{ env.HOST }}
+          REMOTE_USER: ${{ env.USERNAME }}
+          TARGET: ${{ env.TARGET }}
+          EXCLUDE: "/node_modules/, /.idea/, /.git/, /vendor/, /.github/"
+        with:
+          REMOTE_HOST: ${{ env.HOST }}
+          REMOTE_USER: ${{ env.USERNAME }}
+          SSH_PRIVATE_KEY: ${{ secrets.KEY }}
+      - name: Composer and migrations
+        uses: JimCronqvist/action-ssh@master
+        with:
+          hosts: ${{ env.USERNAME }}@${{ env.HOST }}
+          privateKey: ${{ secrets.KEY }}
+          command: |
+            cd ${{ env.TARGET }}
+            ln -s public public_html
+            ln -s public private_html
+            php83 composer.phar install --ignore-platform-reqs
+            php83 artisan env:decrypt --key=${{ secrets.ENCRYPT_KEY }} --env=production --force --filename=.env
+            php83 artisan migrate --force
+            php83 artisan cache:clear
+            php83 artisan optimize
+
+
