@@ -36,8 +36,6 @@ jobs:
           privateKey: ${{ secrets.KEY }}
           command: |
             cd ${{ vars.TARGET }}
-            ln -s public public_html
-            ln -s public private_html
             php83 composer.phar install --ignore-platform-reqs
             php83 artisan env:decrypt --key=${{ secrets.ENCRYPT_KEY }} --env=production --force --filename=.env
             php83 artisan migrate --force
