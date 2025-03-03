@@ -32,21 +32,21 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.KEY }}
           ARGS: "-rltgoDzvO"
           SOURCE: "/"
-          REMOTE_HOST: ${{ env.HOST }}
-          REMOTE_USER: ${{ env.USERNAME }}
-          TARGET: ${{ env.TARGET }}
+          REMOTE_HOST: ${{ vars.HOST }}
+          REMOTE_USER: ${{ vars.USERNAME }}
+          TARGET: ${{ vars.TARGET }}
           EXCLUDE: "/node_modules/, /.idea/, /.git/, /vendor/, /.github/"
         with:
-          REMOTE_HOST: ${{ env.HOST }}
-          REMOTE_USER: ${{ env.USERNAME }}
+          REMOTE_HOST: ${{ vars.HOST }}
+          REMOTE_USER: ${{ vars.USERNAME }}
           SSH_PRIVATE_KEY: ${{ secrets.KEY }}
       - name: Composer and migrations
         uses: JimCronqvist/action-ssh@master
         with:
-          hosts: ${{ env.USERNAME }}@${{ env.HOST }}
+          hosts: ${{ vars.USERNAME }}@${{ vars.HOST }}
           privateKey: ${{ secrets.KEY }}
           command: |
-            cd ${{ env.TARGET }}
+            cd ${{ vars.TARGET }}
             ln -s public public_html
             ln -s public private_html
             php83 composer.phar install --ignore-platform-reqs
