@@ -42,6 +42,5 @@ jobs:
             php83 artisan env:decrypt --key=${{ secrets.ENCRYPT_KEY }} --env=production --force --filename=.env
             php83 artisan migrate --force
             php83 artisan cache:clear
-            php83 artisan optimize
 
 
