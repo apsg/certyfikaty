@@ -87,8 +87,14 @@ class AttemptsController extends Controller
 
     public function download(Attempt $attempt)
     {
+        if (!empty($attempt->certificate->date))
+            $date = $attempt->certificate->date->format('Y-m-d');
+        else{
+            $date = $attempt->finished_at->format('Y-m-d');
+        }
+
         return (new CertificateGenerator($attempt->certificate->layout))
-            ->setDate($attempt->finished_at->format('Y-m-d'))
+            ->setDate($date)
             ->setName($attempt->name)
             ->setTitle($attempt->certificate->title)
             ->setNumber($attempt->number)

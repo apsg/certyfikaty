@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int            id
  * @property string         $slug
  * @property string         $title
- * @property string         $date
+ * @property Carbon|null    $date
  * @property int            $user_id
  * @property int            $layout_id
  * @property int|null       $quiz_id
@@ -35,6 +35,10 @@ class Certificate extends Model
         'user_id',
         'layout_id',
         'quiz_id',
+    ];
+
+    protected $casts = [
+        'date' => 'date',
     ];
 
     public function layout(): BelongsTo
