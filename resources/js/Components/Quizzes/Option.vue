@@ -13,6 +13,7 @@ export default {
         this.update = debounce(this._update, 500);
     },
     mounted() {
+        console.log(this.option.id, this.option.is_correct);
         this.option_value = this.option.option;
         this.is_correct = !!this.option.is_correct;
     },

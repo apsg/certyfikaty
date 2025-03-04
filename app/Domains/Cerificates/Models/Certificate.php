@@ -1,25 +1,28 @@
 <?php
 namespace App\Domains\Cerificates\Models;
 
+use App\Domains\Attempts\Models\Attempt;
 use App\Domains\Quizzes\Models\Quiz;
 use App\HasUserTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property int         id
- * @property string      $slug
- * @property string      $title
- * @property string      $date
- * @property int         $user_id
- * @property int         $layout_id
- * @property int|null    $quiz_id
- * @property Carbon      $created_at
- * @property Carbon      $updated_at
+ * @property int            id
+ * @property string         $slug
+ * @property string         $title
+ * @property string         $date
+ * @property int            $user_id
+ * @property int            $layout_id
+ * @property int|null       $quiz_id
+ * @property Carbon         $created_at
+ * @property Carbon         $updated_at
  *
- * @property-read Layout $layout
- * @property-read Quiz   $quiz
+ * @property-read Layout    $layout
+ * @property-read Quiz      $quiz
+ * @property-read Attempt[] $attempts
  */
 class Certificate extends Model
 {
@@ -42,5 +45,10 @@ class Certificate extends Model
     public function quiz(): BelongsTo
     {
         return $this->belongsTo(Quiz::class);
+    }
+
+    public function attempts(): HasMany
+    {
+        return $this->hasMany(Attempt::class);
     }
 }

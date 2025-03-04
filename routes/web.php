@@ -1,15 +1,7 @@
 <?php
 
-use App\Models\User;
-use Inertia\Inertia;
-use Spatie\Permission\Models\Role;
+use App\Domains\Attempts\Html\AttemptsController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
-use Spatie\Permission\Models\Permission;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PermissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +15,7 @@ use App\Http\Controllers\PermissionController;
 */
 
 Route::get('/', function () {
-    return redirect('login');
+    return \Inertia\Inertia::render('Welcome', []);
 });
 
 require __DIR__ . '/auth.php';
@@ -31,3 +23,15 @@ require __DIR__ . '/auth.php';
 Route::get('/q/{quiz:slug}', function () {
 
 })->name('quiz.show');
+
+Route::prefix('/c')
+    ->name('attempts.')
+    ->group(function () {
+        Route::get('/{certificate:slug}', AttemptsController::class . '@show')->name('show');
+        Route::post('/{certificate:slug}', AttemptsController::class . '@store')->name('store');
+        Route::get('/{certificate:slug}/{attempt:number}', AttemptsController::class . '@showAttempt')
+            ->name('showAttempt');
+        Route::post('/{certificate:slug}/{attempt:number}', AttemptsController::class . '@finish')->name('finish');
+    });
+
+Route::get('/d/{attempt:number}/download', AttemptsController::class . '@download')->name('download');

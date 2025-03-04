@@ -38,4 +38,23 @@ class Question extends Model
     {
         return new QuestionFactory();
     }
+
+    public function isCorrect(array $selected = []): bool
+    {
+        $correct = $this->options->filter(function (QuestionOption $option) {
+            return $option->is_correct;
+        })->pluck('id');
+
+        if (count($correct) !== count($selected)) {
+            return false;
+        }
+
+        foreach ($correct as $id) {
+            if (!in_array($id, $selected)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
