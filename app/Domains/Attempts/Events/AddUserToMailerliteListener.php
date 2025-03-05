@@ -17,11 +17,11 @@ class AddUserToMailerliteListener
             'email' => $event->attempt->email,
         ]);
 
-//        (new Mailerlite($event->attempt->certificate->user->mailerlite_token))
-//            ->addToGroup(
-//                $event->attempt->certificate->mailerlite_group_id,
-//                $event->attempt->email
-//            );
+        (new Mailerlite($event->attempt->certificate->user->mailerlite_token))
+            ->addToGroup(
+                $event->attempt->certificate->mailerlite_group_id,
+                $event->attempt->email
+            );
 
         Log::info('Added');
     }
