@@ -21,11 +21,16 @@ class UpdateCertificateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'     => ['required', 'string'],
-            'slug'      => ['required', 'string', 'unique:certificates,slug,' . $this->route('certificate')->id],
-            'date'      => ['nullable', 'date'],
-            'quiz_id'   => ['nullable', 'integer', 'exists:quizzes,id'],
-            'layout_id' => ['nullable', 'integer', 'exists:layouts,id'],
+            'title'               => ['required', 'string'],
+            'slug'                => [
+                'required',
+                'string',
+                'unique:certificates,slug,' . $this->route('certificate')->id,
+            ],
+            'date'                => ['nullable', 'date'],
+            'quiz_id'             => ['nullable', 'integer', 'exists:quizzes,id'],
+            'layout_id'           => ['nullable', 'integer', 'exists:layouts,id'],
+            'mailerlite_group_id' => ['nullable'],
         ];
     }
 

@@ -2,14 +2,13 @@
 namespace App\Domains\Attempts\Html;
 
 use App\Domains\Attempts\AttemptsRepository;
+use App\Domains\Attempts\Events\UserGainedCertificateEvent;
 use App\Domains\Attempts\Exceptions\AlreadyPassedException;
 use App\Domains\Attempts\Exceptions\AnotherAttemptTooSoonException;
 use App\Domains\Attempts\Models\Attempt;
 use App\Domains\Cerificates\CertificateGenerator;
 use App\Domains\Cerificates\Models\Certificate;
 use App\Http\Controllers\Controller;
-use App\Mail\CertificateMail;
-use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Spatie\Fractalistic\ArraySerializer;
 
@@ -41,6 +40,7 @@ class AttemptsController extends Controller
     {
         if (!$certificate->hasQuiz() && !$attempt->isFinished()) {
             $repository->finish($attempt);
+            event(new UserGainedCertificateEvent($attempt));
         }
 
         if ($attempt->isFinished()) {
@@ -73,12 +73,7 @@ class AttemptsController extends Controller
         $isPassed = $repository->checkAnswers($attempt, $request->input('answers'));
 
         if ($isPassed) {
-
-            Mail::to($attempt->email)
-                ->send(new CertificateMail(
-                    $certificate->title,
-                    route('attempts.showAttempt', [$certificate, $attempt])
-                ));
+            event(new UserGainedCertificateEvent($attempt));
 
             return ['ok'];
         } else {

@@ -13,6 +13,7 @@ const props = defineProps({
     certificate: Object,
     layouts: Array,
     quizzes: Array,
+    groups: Array,
 });
 const data = reactive({
     title: {
@@ -35,6 +36,12 @@ const data = reactive({
         value: props.certificate.layout_id,
         error: null,
     },
+    group_id: {
+        value: props.certificate.mailerlite_group_id
+            ? [props.certificate.mailerlite_group_id]
+            : [],
+        error: null,
+    },
 });
 
 const url = computed(() => {
@@ -50,9 +57,13 @@ const update = debounce(() => {
         .post(route("admin.certificates.update", props.certificate.id), {
             title: data.title.value,
             slug: data.slug.value,
-            date: data.date.value ? moment(data.date.value).format("YYYY-MM-DD") : null,
+            date: data.date.value
+                ? moment(data.date.value).format("YYYY-MM-DD")
+                : null,
             quiz_id: data.quiz_id.value,
             layout_id: data.layout_id.value,
+            mailerlite_group_id:
+                data.group_id.value.length > 0 ? data.group_id.value[0] : null,
         })
         .then((response) => {
             console.log(response);
@@ -120,7 +131,11 @@ const update = debounce(() => {
                     Data:
                 </label>
                 <div class="col-span-12 md:col-span-11">
-                    <DatePicker v-model="data.date.value" date-format="yy-mm-dd" @update:model-value="update" />
+                    <DatePicker
+                        v-model="data.date.value"
+                        date-format="yy-mm-dd"
+                        @update:model-value="update"
+                    />
                     <p>
                         Data, która ma się pojawić na certyfikacie. Zostaw
                         puste, aby użyć daty podejścia do testu.
@@ -162,6 +177,30 @@ const update = debounce(() => {
                         {{ layout.name }}
                     </option>
                 </select>
+            </div>
+
+            <div class="grid grid-cols-12 gap-2 mt-4" v-if="props.groups.length > 0">
+                <label class="col-span-12">Grupa MailerLite, do której zostanie zapisany użytkownik po uzyskaniu certyfikatu:</label>
+
+                <MultiSelect
+                    class="col-span-12"
+                    v-model="data.group_id.value"
+                    :options="props.groups"
+                    filter
+                    :filter-fields="['name']"
+                    :max-selected-labels="1"
+                    :selection-limit="1"
+                    option-label="name"
+                    option-value="id"
+                    show-clear
+                    @change="update"
+                >
+                    <template #option="slotProps">
+                        <div class="flex items-center">
+                            <div>{{ slotProps.option.name }}</div>
+                        </div>
+                    </template>
+                </MultiSelect>
             </div>
         </div>
     </app-layout>

@@ -3,6 +3,7 @@ namespace App\Domains\Cerificates\Html;
 
 use App\Domains\Cerificates\Models\Certificate;
 use App\Domains\Cerificates\Models\Layout;
+use App\Domains\Integrations\Mailerlite;
 use App\Domains\Quizzes\Models\Quiz;
 use App\Http\Controllers\Controller;
 use Faker\Factory;
@@ -31,23 +32,25 @@ class CertificatesController extends Controller
         return redirect()->route('admin.certificates.edit', $certificate);
     }
 
-    public function edit(Certificate $certificate)
+    public function edit(Certificate $certificate, Mailerlite $mailerlite)
     {
         return Inertia::render('Certificates/Edit', [
             'certificate' => $certificate,
             'layouts'     => Layout::forUser(Auth::user())->get(),
             'quizzes'     => Quiz::forUser(Auth::user())->get(),
+            'groups'      => $mailerlite->getGroups(),
         ]);
     }
 
     public function update(Certificate $certificate, UpdateCertificateRequest $request)
     {
         $certificate->update([
-            'title'     => $request->input('title'),
-            'slug'      => $request->input('slug'),
-            'date'      => $request->date,
-            'quiz_id'   => $request->quiz ? $request->quiz->id : null,
-            'layout_id' => $request->layout->id,
+            'title'               => $request->input('title'),
+            'slug'                => $request->input('slug'),
+            'date'                => $request->date,
+            'quiz_id'             => $request->quiz ? $request->quiz->id : null,
+            'layout_id'           => $request->layout->id,
+            'mailerlite_group_id' => $request->input('mailerlite_group_id'),
         ]);
 
         return ['ok'];

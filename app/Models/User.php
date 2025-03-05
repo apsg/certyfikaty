@@ -9,13 +9,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
- * @property int    id
- * @property string name
- * @property string email
- * @property string password
- * @property Carbon created_at
- * @property Carbon updated_at
- * @property Carbon email_verified_at
+ * @property int         id
+ * @property string      name
+ * @property string      email
+ * @property string      password
+ * @property Carbon      created_at
+ * @property Carbon      updated_at
+ * @property Carbon      email_verified_at
+ * @property string|null mailerlite_token
  */
 class User extends Authenticatable
 {
@@ -25,6 +26,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'mailerlite_token'
     ];
 
     protected $hidden = [

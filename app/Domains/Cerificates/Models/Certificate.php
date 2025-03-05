@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int            $user_id
  * @property int            $layout_id
  * @property int|null       $quiz_id
+ * @property string|null    $mailerlite_group_id
  * @property Carbon         $created_at
  * @property Carbon         $updated_at
  *
@@ -35,6 +36,7 @@ class Certificate extends Model
         'user_id',
         'layout_id',
         'quiz_id',
+        'mailerlite_group_id',
     ];
 
     protected $casts = [

@@ -21,10 +21,6 @@ Route::get('/', function () {
 
 require __DIR__ . '/auth.php';
 
-Route::get('/q/{quiz:slug}', function () {
-
-})->name('quiz.show');
-
 Route::prefix('/c')
     ->name('attempts.')
     ->group(function () {
@@ -36,7 +32,6 @@ Route::prefix('/c')
     });
 
 Route::get('/d/{attempt:number}/download', AttemptsController::class . '@download')->name('download');
-
 
 Route::get('/waliduj', ValidateController::class . '@show')->name('validate.show');
 Route::post('/waliduj', ValidateController::class . '@check')->name('validate.check');
