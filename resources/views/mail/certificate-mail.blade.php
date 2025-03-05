@@ -5,7 +5,7 @@ Wystawiono dla Ciebie nowy certyfikat:
 
 ### {{ $title }}
 
-Możesz pobrać klikając w poniższy link:
+Możesz go pobrać klikając w poniższy link:
 
 <x-mail::button :url="$url">
 Zobacz i pobierz certyfikat
