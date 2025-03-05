@@ -14,8 +14,9 @@ class UpdateQuizRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255',
+            'name'           => 'required|string|max:255',
+            'slug'           => 'required|string|max:255',
+            'min_percentage' => 'required|numeric|min:0|max:100',
         ];
     }
 }

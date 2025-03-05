@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string          $name
  * @property string          $slug
  * @property int             $user_id
+ * @property int             $min_percentage
  * @property Carbon          $created_at
  * @property Carbon          $updated_at
  *
@@ -23,7 +24,7 @@ class Quiz extends Model
 {
     use HasFactory, HasUserTrait;
 
-    protected $fillable = ['name', 'slug', 'user_id'];
+    protected $fillable = ['name', 'slug', 'user_id', 'min_percentage'];
 
     protected static function newFactory(): QuizFactory
     {

@@ -37,6 +37,10 @@ class AttemptsController extends Controller
 
     public function showAttempt(Certificate $certificate, Attempt $attempt, AttemptsRepository $repository)
     {
+        if (!$certificate->hasQuiz()){
+            $repository->finish($attempt);
+        }
+
         if ($attempt->isFinished()) {
             return $this->showStatus($certificate, $attempt);
         }
@@ -97,7 +101,7 @@ class AttemptsController extends Controller
             ->setDate($date)
             ->setName($attempt->name)
             ->setTitle($attempt->certificate->title)
-            ->setNumber($attempt->number)
+            ->setNumber(strtoupper($attempt->number))
             ->generate();
     }
 }

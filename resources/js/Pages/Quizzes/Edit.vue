@@ -20,20 +20,23 @@ const data = reactive({
         value: props.quiz.slug,
         error: null,
     },
+    min_percentage: {
+        value: props.quiz.min_percentage,
+        error: null,
+    },
 });
 
-const update =
-    debounce(() => {
-        axios
-            .post(route("admin.quizzes.update", props.quiz.id), {
-                name: data.name.value,
-                slug: data.slug.value,
-            })
-            .then((response) => {
-                console.log(response);
-            });
-    }, 500);
-
+const update = debounce(() => {
+    axios
+        .post(route("admin.quizzes.update", props.quiz.id), {
+            name: data.name.value,
+            slug: data.slug.value,
+            min_percentage: data.min_percentage.value,
+        })
+        .then((response) => {
+            console.log(response);
+        });
+}, 500);
 </script>
 
 <template>
@@ -70,23 +73,26 @@ const update =
                     class="flex items-center col-span-12 mb-2 md:col-span-1 md:mb-0"
                     >Slug:</label
                 >
-                <div class="col-span-12 md:col-span-11">
-                    <input
-                        type="text"
-                        class="p-inputtext p-component p-inputtext-fluid"
-                        v-model="data.slug.value"
-                        placeholder="Slug"
-                        @change="update"
-                        @keyup="update"
-                    />
-                </div>
+<!--                <div class="col-span-12 md:col-span-11">-->
+<!--                    <input-->
+<!--                        type="text"-->
+<!--                        class="p-inputtext p-component p-inputtext-fluid"-->
+<!--                        v-model="data.slug.value"-->
+<!--                        placeholder="Slug"-->
+<!--                        @change="update"-->
+<!--                        @keyup="update"-->
+<!--                    />-->
+<!--                </div>-->
 
                 <div class="col-span-12">
-                    <InputText
-                        disabled
-                        type="text"
-                        class="p-inputtext p-component p-inputtext-fluid"
-                        :value="route('quiz.show', data.slug.value)"
+                    <p>Procent poprawnych odpowiedzi wymagany, aby zdać: <span class="font-bold">{{ data.min_percentage.value }}%</span>
+                    </p>
+                    <Slider
+                        class="mt-5"
+                        :min="0"
+                        :max="100"
+                        v-model="data.min_percentage.value"
+                        @change="update"
                     />
                 </div>
             </div>

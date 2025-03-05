@@ -58,10 +58,10 @@ const data = reactive({
             <div class="col-span-9 pl-2">
                 {{ attempt.date }}
             </div>
-            <div class="col-span-3 font-bold">
+            <div class="col-span-3 font-bold" v-if="attempt.has_quiz">
                 Prawidłowe odpowiedzi:
             </div>
-            <div class="col-span-9 pl-2">
+            <div class="col-span-9 pl-2" v-if="attempt.has_quiz">
                 {{ attempt.score ?? 0 }} ({{ attempt.percentage }}%)
             </div>
         </div>

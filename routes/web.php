@@ -1,6 +1,7 @@
 <?php
 
 use App\Domains\Attempts\Html\AttemptsController;
+use App\Domains\Attempts\Html\ValidateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,3 +36,7 @@ Route::prefix('/c')
     });
 
 Route::get('/d/{attempt:number}/download', AttemptsController::class . '@download')->name('download');
+
+
+Route::get('/waliduj', ValidateController::class . '@show')->name('validate.show');
+Route::post('/waliduj', ValidateController::class . '@check')->name('validate.check');

@@ -55,4 +55,9 @@ class Certificate extends Model
     {
         return $this->hasMany(Attempt::class);
     }
+
+    public function hasQuiz(): bool
+    {
+        return $this->quiz_id !== null;
+    }
 }
