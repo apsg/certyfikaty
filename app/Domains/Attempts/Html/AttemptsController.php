@@ -8,6 +8,8 @@ use App\Domains\Attempts\Models\Attempt;
 use App\Domains\Cerificates\CertificateGenerator;
 use App\Domains\Cerificates\Models\Certificate;
 use App\Http\Controllers\Controller;
+use App\Mail\CertificateMail;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Spatie\Fractalistic\ArraySerializer;
 
@@ -37,7 +39,7 @@ class AttemptsController extends Controller
 
     public function showAttempt(Certificate $certificate, Attempt $attempt, AttemptsRepository $repository)
     {
-        if (!$certificate->hasQuiz()){
+        if (!$certificate->hasQuiz() && !$attempt->isFinished()) {
             $repository->finish($attempt);
         }
 
@@ -71,6 +73,13 @@ class AttemptsController extends Controller
         $isPassed = $repository->checkAnswers($attempt, $request->input('answers'));
 
         if ($isPassed) {
+
+            Mail::to($attempt->email)
+                ->send(new CertificateMail(
+                    $certificate->title,
+                    route('attempts.showAttempt', [$certificate, $attempt])
+                ));
+
             return ['ok'];
         } else {
             abort(409, 'nope');
@@ -91,9 +100,9 @@ class AttemptsController extends Controller
 
     public function download(Attempt $attempt)
     {
-        if (!empty($attempt->certificate->date))
+        if (!empty($attempt->certificate->date)) {
             $date = $attempt->certificate->date->format('Y-m-d');
-        else{
+        } else {
             $date = $attempt->finished_at->format('Y-m-d');
         }
 

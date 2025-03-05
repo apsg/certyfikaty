@@ -46,7 +46,7 @@ export default {
                   window.location.reload();
                 })
                 .catch((res) => {
-                    this.error = res.response.data;
+                    this.error = res.response.data.message;
                 });
         },
     },

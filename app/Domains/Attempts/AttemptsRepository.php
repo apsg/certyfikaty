@@ -8,7 +8,6 @@ use App\Domains\Cerificates\Models\Certificate;
 use App\Domains\Quizzes\Models\Question;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Crypt;
 
 class AttemptsRepository
 {
@@ -78,7 +77,7 @@ class AttemptsRepository
             }
         }
 
-        $isPassed = ($points / $questions->count()) > 0.5;
+        $isPassed = (($points / $questions->count()) >= ($attempt->certificate->quiz->min_percentage / 100));
 
         $attempt->update([
             'is_passed'   => $isPassed,

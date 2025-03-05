@@ -63,9 +63,8 @@ const validate = () => {
 
             <div class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
                 <p class="pi pi-check-square"></p>
-                <span class="sr-only">Info</span>
-                <div class="pl-5">
-                    <span class="font-medium">Certyfikat poprawny!</span>
+                <div class="p-3">
+                    <span class="ml-3 font-medium">Certyfikat poprawny!</span>
                 </div>
             </div>
 
