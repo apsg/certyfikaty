@@ -21,7 +21,7 @@ const { onMenuToggle, toggleDarkMode, isDarkTheme } = useLayout();
                 class="layout-topbar-logo"
             >
                 <img
-                    src="/images/logo.png"
+                    src="/images/logo-inauka.svg"
                     alt="inauka"
                     style="max-height: 50px"
                 />

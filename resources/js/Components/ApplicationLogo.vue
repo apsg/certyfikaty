@@ -1,5 +1,5 @@
 <template>
     <div>
-    <img src="/images/logo.png" style="min-height: 50px" />
+    <img src="/images/logo-inauka.svg" style="min-height: 50px" />
     </div>
 </template>
