@@ -98,8 +98,16 @@ class CertificateGenerator
     {
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('SoraRegular', '', $size);
-        $pdf->SetXY($left ?? 0, $top);
-        $pdf->cell('0', '0', iconv('UTF-8', 'iso-8859-2',$text), 0, 1, $left ? 'L' : 'C');
+
+        $lines = explode('\n', $text);
+
+        foreach ($lines as $line) {
+
+            $pdf->SetXY($left ?? 0, $top);
+            $pdf->Cell('0', '0', iconv('UTF-8', 'iso-8859-2', $line), 0, 1, $left ? 'L' : 'C');
+
+            $top += 7;
+        }
 
         return $pdf;
     }

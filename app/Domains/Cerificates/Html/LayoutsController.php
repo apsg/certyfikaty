@@ -73,7 +73,7 @@ class LayoutsController extends Controller
         $certificate = new CertificateGenerator($layout);
         $certificate->setDate(Carbon::now()->format('Y-m-d'))
             ->setName('Antoni Brzęczyszczykiewicz')
-            ->setTitle('Kurs Excel w godzinę')
+            ->setTitle('Kurs Excel \nw godzinę jakiś bardzo długi \n tekst na wdisajdksaj sadj sakldj aksd sahd as dsand asjd sajd sajdk asjkla')
             ->setNumber('1234567');
 
         return response($certificate->generate(), 200, [
