@@ -77,7 +77,7 @@ class AttemptsController extends Controller
 
             return ['ok'];
         } else {
-            abort(409, 'nope');
+            return back();
         }
     }
 
