@@ -7,6 +7,7 @@ use App\Domains\Integrations\Mailerlite;
 use App\Domains\Quizzes\Models\Quiz;
 use App\Http\Controllers\Controller;
 use Faker\Factory;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -54,5 +55,21 @@ class CertificatesController extends Controller
         ]);
 
         return ['ok'];
+    }
+
+    public function destroy(Certificate $certificate)
+    {
+        $this->authorize('delete', $certificate);
+
+        try {
+            $certificate->delete();
+        } catch (QueryException $exception) {
+
+            return back()->with([
+                'error' => 'Nie można usunąć certyfikatu, który ktoś uzyskał.',
+            ]);
+        }
+
+        return back();
     }
 }

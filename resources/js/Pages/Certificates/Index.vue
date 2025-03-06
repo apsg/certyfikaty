@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from "@/sakai/layout/AppLayout.vue";
 import { loadToast } from "@/composables/loadToast";
+import {usePage} from "@inertiajs/vue3";
 
 const props = defineProps({
     title: String,
@@ -9,12 +10,18 @@ const props = defineProps({
 
 loadToast();
 
-
+const page = usePage();
 </script>
 
 <template>
     <app-layout>
         <div class="card">
+            <div
+                v-if="page.props.flash.error"
+                class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                {{ page.props.flash.error }}
+            </div>
+
             <a :href="route('admin.certificates.create')">
                 <Button icon="pi pi-plus" label="Dodaj certyfikat" />
             </a>
