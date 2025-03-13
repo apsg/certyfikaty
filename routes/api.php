@@ -1,19 +1,12 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Domains\Cerificates\Html\Api\CertificatesController;
+use App\Http\Middleware\AuthorizeApiRequestMiddleware;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::prefix('/certificates')
+    ->name('certificates.')
+    ->middleware(AuthorizeApiRequestMiddleware::class)
+    ->group(function () {
+        Route::get('/', [CertificatesController::class, 'search'])->name('search');
+    });

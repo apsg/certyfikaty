@@ -13,6 +13,8 @@ return [
     |
     */
 
+    'api_key' => env('AUTH_API_KEY'),
+
     'defaults' => [
         'guard' => 'web',
         'passwords' => 'users',

@@ -3,9 +3,9 @@ namespace App\Domains\Attempts\Models;
 
 use App\Domains\Cerificates\Models\Certificate;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Crypt;
 
 /**
  * @property int              id
@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\Crypt;
  * @property string           number
  *
  * @property-read Certificate $certificate
+ *
+ * @method static Builder passed()
+ * @method static Builder forEmail(string $email)
  */
 class Attempt extends Model
 {
@@ -53,5 +56,15 @@ class Attempt extends Model
     public function isFinished(): bool
     {
         return $this->finished_at !== null;
+    }
+
+    public function scopePassed(Builder $builder): Builder
+    {
+        return $builder->where('is_passed', true);
+    }
+
+    public function scopeForEmail(Builder $builder, string $email): Builder
+    {
+        return $builder->where('email', $email);
     }
 }

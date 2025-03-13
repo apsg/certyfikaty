@@ -28,6 +28,10 @@ class AttemptStatusTransformer extends TransformerAbstract
             return null;
         }
 
+        if ($attempt->certificate->quiz->questions->count() == 0){
+            return null;
+        }
+
         return number_format(100 * $attempt->score / count($attempt->certificate->quiz->questions), 2);
     }
 }

@@ -60,6 +60,14 @@ class Certificate extends Model
 
     public function hasQuiz(): bool
     {
-        return $this->quiz_id !== null;
+        if ($this->quiz_id === null) {
+            return false;
+        }
+
+        if ($this->quiz->questions()->count() === 0) {
+            return false;
+        }
+
+        return true;
     }
 }
