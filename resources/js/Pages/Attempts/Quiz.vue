@@ -18,8 +18,8 @@ const data = reactive({});
     <guest-layout>
         <h1
             class="mb-4 text-lg font-extrabold leading-none tracking-tight text-gray-900 md:text-xl lg:text-xl dark:text-white"
+            v-html="certificate.title_formatted"
         >
-            {{ certificate.title }}
         </h1>
         <p>
             Rozwiązujesz test jako: {{ props.attempt.name }} ({{

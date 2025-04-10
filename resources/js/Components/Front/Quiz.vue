@@ -67,6 +67,11 @@ export default {
     mounted() {
         this.questionsCount = this.quiz.questions.length;
     },
+    computed:{
+        hasAllAnswers(){
+            return this.answers.length === this.quiz.questions.length;
+        }
+    }
 };
 </script>
 
@@ -103,12 +108,13 @@ export default {
             v-show="id === this.current"
             @change="questionAnswered"
         />
-        <div class="text-right">
+        <div class="text-right"
+             v-if="this.hasAllAnswers"
+        >
             <Button
                 icon="pi pi-forward"
                 icon-pos="right"
                 label="Zakończ test"
-                :disabled="this.answers.length !== this.quiz.questions.length"
                 @click="finish"
             />
         </div>

@@ -17,7 +17,7 @@ class AttemptStatusTransformer extends TransformerAbstract
             'date'          => $attempt->finished_at->format('Y-m-d H:i'),
             'percentage'    => $this->getPercentage($attempt),
             'download_link' => route('download', $attempt),
-            'title'         => $attempt->certificate->title,
+            'title'         => $attempt->certificate->title_formatted,
             'has_quiz'      => $attempt->certificate->hasQuiz(),
         ];
     }

@@ -4,7 +4,7 @@ import { reactive } from "vue";
 import axios from "axios";
 import pkg from "lodash";
 import TextInput from "@/Components/TextInput.vue";
-import {router} from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 
 const { _, debounce, pickBy } = pkg;
 
@@ -16,10 +16,12 @@ const data = reactive({
     name: "",
     email: "",
     error: null,
+    error_code: null,
 });
 
 const next = () => {
     data.error = null;
+    data.error_code = null;
 
     axios
         .post(route("attempts.store", props.certificate), {
@@ -31,8 +33,27 @@ const next = () => {
         })
         .catch((res) => {
             data.error = res.response.data.message;
+            data.error_code = res.response.status;
         });
 };
+
+const resend = () => {
+    data.error = null;
+    data.error_code = null;
+
+    axios
+        .post(route("resend"), {
+            email: data.email,
+        })
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((res) => {
+            data.error = res.response.data.message;
+            data.error_code = res.response.status;
+        });
+};
+
 </script>
 
 <template>
@@ -40,9 +61,8 @@ const next = () => {
         <p>Uzyskaj certyfikat:</p>
         <h1
             class="mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-2xl lg:text-3xl dark:text-white"
-        >
-            {{ certificate.title }}
-        </h1>
+            v-html="certificate.title_formatted"
+        ></h1>
         <p>Podaj swoje dane:</p>
         <TextInput v-model="data.name" label="Imię i nazwisko" class="w-full" />
         <label>
@@ -72,6 +92,16 @@ const next = () => {
             role="alert"
         >
             {{ data.error }}
+        </div>
+        <div v-if="data.error_code == 409">
+            <p class="text-lg">Mail nie dotarł?</p>
+            <Button
+                icon="pi pi-refresh"
+                label="Wyślij ponownie"
+                rounded
+                class="mr-2"
+                @click="resend"
+            />
         </div>
     </guest-layout>
 </template>

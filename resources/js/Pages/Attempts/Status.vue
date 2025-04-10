@@ -35,8 +35,8 @@ const data = reactive({
 
         <h1
             class="mb-4 text-center text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-2xl lg:text-3xl dark:text-white"
+            v-html="attempt.title"
         >
-            {{ attempt.title }}
         </h1>
 
         <div class="grid grid-cols-12 items-end">

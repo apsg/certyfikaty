@@ -1,5 +1,6 @@
 <?php
 
+use App\Domains\Attempts\Html\AttemptReminderController;
 use App\Domains\Attempts\Html\AttemptsController;
 use App\Domains\Attempts\Html\ValidateController;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,4 @@ Route::get('/d/{attempt:number}/download', AttemptsController::class . '@downloa
 
 Route::get('/waliduj', ValidateController::class . '@show')->name('validate.show');
 Route::post('/waliduj', ValidateController::class . '@check')->name('validate.check');
+Route::post('/resend', AttemptReminderController::class)->name('resend');

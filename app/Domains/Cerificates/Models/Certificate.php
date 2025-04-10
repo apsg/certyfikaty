@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 /**
  * @property int            id
@@ -24,6 +25,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read Layout    $layout
  * @property-read Quiz      $quiz
  * @property-read Attempt[] $attempts
+ *
+ * @property-read string     $title_formatted
  */
 class Certificate extends Model
 {
@@ -41,6 +44,10 @@ class Certificate extends Model
 
     protected $casts = [
         'date' => 'date',
+    ];
+
+    protected $appends = [
+        'title_formatted',
     ];
 
     public function layout(): BelongsTo
@@ -69,5 +76,10 @@ class Certificate extends Model
         }
 
         return true;
+    }
+
+    public function getTitleFormattedAttribute(): string
+    {
+        return Str::replace('\n', '<br />',nl2br($this->title));
     }
 }

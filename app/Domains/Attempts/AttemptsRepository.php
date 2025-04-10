@@ -88,4 +88,14 @@ class AttemptsRepository
 
         return $isPassed;
     }
+
+    /**
+     * @return Collection<Attempt>
+     */
+    public function find(string $email): Collection
+    {
+        return Attempt::where('email', $email)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
 }
