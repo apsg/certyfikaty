@@ -1,7 +1,6 @@
 <script setup>
 import AppLayout from "@/sakai/layout/AppLayout.vue";
-import Create from "@/Pages/User/Create.vue";
-import Edit from "@/Pages/User/Edit.vue";
+import Create from "@/Pages/AdminAttempts/Create.vue";
 import { usePage, useForm } from '@inertiajs/vue3';
 
 import { onMounted, reactive, ref, watch, computed } from "vue";
@@ -14,7 +13,7 @@ const props = defineProps({
     title: String,
     filters: Object,
     attempts: Object,
-    roles: Object,
+    certificates: Object,
     perPage: Number,
 });
 
@@ -88,7 +87,7 @@ const resendMail = (id) => {
             <Create
                 :show="data.createOpen"
                 @close="data.createOpen = false"
-                :roles="roles"
+                :certificates="certificates"
                 :title="props.title"
             />
             <Button label="Przyznaj certyfikat ręcznie" @click="data.createOpen = true" icon="pi pi-plus" />
@@ -99,14 +98,14 @@ const resendMail = (id) => {
                             <InputIcon>
                                 <i class="pi pi-search" />
                             </InputIcon>
-                            <InputText v-model="data.params.search" placeholder="Keyword Search" />
+                            <InputText v-model="data.params.search" placeholder="Wyszukaj" />
                         </IconField>
                     </div>
                 </template>
                 <template #empty> No data found. </template>
                 <template #loading> Loading data. Please wait. </template>
 
-                <Column header="No">
+                <Column header="ID">
                     <template #body="slotProps">
                         {{slotProps.index + 1}}
                     </template>

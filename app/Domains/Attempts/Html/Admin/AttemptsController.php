@@ -1,7 +1,10 @@
 <?php
 namespace App\Domains\Attempts\Html\Admin;
 
+use App\Domains\Attempts\AttemptsRepository;
+use App\Domains\Attempts\Events\UserGainedCertificateEvent;
 use App\Domains\Attempts\Models\Attempt;
+use App\Domains\Cerificates\Models\Certificate;
 use App\Http\Controllers\Controller;
 use App\Mail\CertificateMail;
 use Illuminate\Support\Facades\Auth;
@@ -27,18 +30,20 @@ class AttemptsController extends Controller
         }
 
         $attempts = $attempts->paginate(25);
+        $certificates = Certificate::forUser(Auth::user())->get();
 
         return Inertia::render('AdminAttempts/Index', [
-            'attempts' => $attempts,
-            'filters'  => $request->all(['search', 'field', 'order']),
-            'title'    => 'Podejścia do certyfikatów',
+            'attempts'     => $attempts,
+            'filters'      => $request->all(['search', 'field', 'order']),
+            'title'        => 'Podejścia do certyfikatów',
+            'certificates' => $certificates,
         ]);
     }
 
     public function reset(Attempt $attempt)
     {
         if ($attempt->is_passed) {
-            return ['ok'];
+            return back()->with('success', 'Użytkownik już zaliczył ten test.');
         }
 
         $attempt->update([
@@ -48,7 +53,7 @@ class AttemptsController extends Controller
             'finished_at' => null,
         ]);
 
-        return ['ok'];
+        return back()->with('success', 'Zresetowano.');
     }
 
     public function resend(Attempt $attempt)
@@ -61,6 +66,15 @@ class AttemptsController extends Controller
                 route('attempts.showAttempt', [$attempt->certificate, $attempt])
             ));
 
-        return ['ok'];
+        return back()->with('success', 'Wysłano.');
+    }
+
+    public function store(AttemptStoreRequest $request, AttemptsRepository $repository)
+    {
+        $attempt = $repository->createManual($request->certificate(), $request->input('name'),
+            $request->input('email'));
+        event(new UserGainedCertificateEvent($attempt));
+
+        return back()->with('success', 'Utworzono i wysłano.');
     }
 }

@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{g as n,o as r,d as s}from"./app-Bxx3_Drl.js";const t={};function a(i,o){return r(),n("div",null,o[0]||(o[0]=[s("img",{src:"/images/logo-inauka.svg",style:{"min-height":"50px"}},null,-1)]))}const m=e(t,[["render",a]]);export{m as A};

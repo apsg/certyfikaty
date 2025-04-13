@@ -24,6 +24,24 @@ class AttemptsRepository
         ]);
     }
 
+    public function createManual(Certificate $certificate, string $name, string $email): Attempt
+    {
+        $attempt = Attempt::firstOrCreate([
+            'certificate_id' => $certificate->id,
+            'name'           => $name,
+            'email'          => $email,
+        ], [
+            'number' => bin2hex(random_bytes(4)),
+        ]);
+
+        $attempt->update([
+            'is_passed'   => true,
+            'finished_at' => Carbon::now(),
+        ]);
+
+        return $attempt;
+    }
+
     public function check(Certificate $certificate, string $email): void
     {
         if (Attempt::where('certificate_id', $certificate->id)
@@ -98,4 +116,5 @@ class AttemptsRepository
             ->orderBy('created_at', 'desc')
             ->get();
     }
+
 }

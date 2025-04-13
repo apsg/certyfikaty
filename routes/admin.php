@@ -81,4 +81,5 @@ Route::prefix('/attempts')
         Route::get('/', AttemptsController::class . '@index')->name('index');
         Route::delete('/{attempt}', AttemptsController::class . '@reset')->name('reset');
         Route::post('/{attempt}', AttemptsController::class . '@resend')->name('resend');
+        Route::post('/', AttemptsController::class . '@store')->name('store');
     });
