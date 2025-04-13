@@ -2,7 +2,9 @@
 namespace App\Domains\Attempts\Models;
 
 use App\Domains\Cerificates\Models\Certificate;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @method static Builder passed()
  * @method static Builder forEmail(string $email)
+ * @method static Builder forUser(?User $user)
  */
 class Attempt extends Model
 {
@@ -66,5 +69,16 @@ class Attempt extends Model
     public function scopeForEmail(Builder $builder, string $email): Builder
     {
         return $builder->where('email', $email);
+    }
+
+    public function scopeForUser(Builder $builder, ?Authenticatable $user): Builder
+    {
+        if ($user === null || $user->id == 1) {
+            return $builder;
+        }
+
+        return $builder->wherehas('certificate', function (Builder $query) use ($user) {
+            return $query->forUser($user);
+        });
     }
 }

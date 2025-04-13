@@ -26,7 +26,8 @@ use Illuminate\Support\Str;
  * @property-read Quiz      $quiz
  * @property-read Attempt[] $attempts
  *
- * @property-read string     $title_formatted
+ * @property-read string    $title_formatted
+ * @property-read string    $title_cleaned
  */
 class Certificate extends Model
 {
@@ -48,6 +49,7 @@ class Certificate extends Model
 
     protected $appends = [
         'title_formatted',
+        'title_cleaned',
     ];
 
     public function layout(): BelongsTo
@@ -80,6 +82,11 @@ class Certificate extends Model
 
     public function getTitleFormattedAttribute(): string
     {
-        return Str::replace('\n', '<br />',nl2br($this->title));
+        return Str::replace('\n', '<br />', nl2br($this->title));
+    }
+
+    public function getTitleCleanedAttribute(): string
+    {
+        return Str::replace('\n', '', $this->title);
     }
 }

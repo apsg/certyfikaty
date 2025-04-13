@@ -1,5 +1,6 @@
 <?php
 
+use App\Domains\Attempts\Html\Admin\AttemptsController;
 use App\Domains\Cerificates\Html\CertificatesController;
 use App\Domains\Cerificates\Html\LayoutsController;
 use App\Domains\Quizzes\Html\OptionsController;
@@ -72,4 +73,12 @@ Route::prefix('/certificates')
         Route::get('/{certificate}', CertificatesController::class . '@edit')->name('edit');
         Route::post('/{certificate}', CertificatesController::class . '@update')->name('update');
         Route::get('/{certificate}/destroy', CertificatesController::class . '@destroy')->name('destroy');
+    });
+
+Route::prefix('/attempts')
+    ->name('attempts.')
+    ->group(function () {
+        Route::get('/', AttemptsController::class . '@index')->name('index');
+        Route::delete('/{attempt}', AttemptsController::class . '@reset')->name('reset');
+        Route::post('/{attempt}', AttemptsController::class . '@resend')->name('resend');
     });

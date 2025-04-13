@@ -16,6 +16,9 @@ const model = ref([
     {
         items: [{ label: 'Certyfikaty', icon: 'pi pi-fw pi-link', to: '/admin/certificates' }]
     },
+    {
+        items: [{ label: 'Podejścia do certyfikatów', icon: 'pi pi-fw pi-users', to: '/admin/attempts' }]
+    }
 ]);
 </script>
 
