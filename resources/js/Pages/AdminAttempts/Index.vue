@@ -107,7 +107,7 @@ const resendMail = (id) => {
 
                 <Column header="ID">
                     <template #body="slotProps">
-                        {{slotProps.index + 1}}
+                        {{ slotProps.data.id }}
                     </template>
                 </Column>
                 <Column field="number" header="Numer"></Column>
